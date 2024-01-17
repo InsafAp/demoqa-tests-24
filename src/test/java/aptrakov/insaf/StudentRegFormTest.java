@@ -23,7 +23,7 @@ public class StudentRegFormTest {
 
     @Test
 
-    void StudentRegFormTest() {
+    void studentRegFormTest() {
 
         open("/automation-practice-form");
         executeJavaScript("$('#fixedban').remove()");
@@ -32,7 +32,7 @@ public class StudentRegFormTest {
         $("#firstName").setValue("Insaf");
         $("#lastName").setValue("Aptrakov");
         $("#userEmail").setValue("insaf@aptrakov.com");
-        $(".custom-control-label").click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("9111111111");
 
         $("#dateOfBirthInput").click();
@@ -40,16 +40,16 @@ public class StudentRegFormTest {
         $(".react-datepicker__year-select").selectOption("1999");
         $(".react-datepicker__day--016").click();
 
-        $("#subjectsInput").setValue("Arts").sendKeys(Keys.ENTER);
-        $(byText("Sports")).ancestor(".custom-checkbox").click();
+        $("#subjectsInput").setValue("Arts").pressEnter();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
         $("#uploadPicture").uploadFromClasspath("test.jpeg");
         $("#currentAddress").setValue("test");
 
         $("#state").click();
-        $(byText("NCR")).click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
 
         $("#city").click();
-        $(byText("Delhi")).click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
 
         $("#submit").click();
 //проверка
