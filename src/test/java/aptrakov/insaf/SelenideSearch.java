@@ -2,6 +2,7 @@ package aptrakov.insaf;
 
 
 
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -32,12 +33,13 @@ public class SelenideSearch {
         //клик по wiki
         $("#wiki-tab").click();
         //проверка что есть SoftAssertions
-        $("#wiki-body").shouldHave(text("Soft assertions"));
+        $("#wiki-pages-filter").setValue("SoftAssertions");
+        $("#wiki-pages-box").shouldHave(text("SoftAssertions"));
         //перейти в SoftAssertions
-        $("#wiki-body").$(byText("Soft assertions")).click();
+        $("#wiki-pages-box").$(byText("SoftAssertions")).click();
         //проверка что есть пример кода
         $("#wiki-content").shouldHave(text("Using JUnit5 extend test class:"));
-        $("#wiki-content").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+       /* $("#wiki-content").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
                 "class Tests {\n" +
                 "@Test\n" +
                 "void test() {\n" +
@@ -46,8 +48,18 @@ public class SelenideSearch {
                 "$(\"#first\").should(visible).click();\n" +
                 "$(\"#second\").should(visible).click();\n" +
                 "}\n" +
-                "}"));
+                "}"));*/
 
+
+        SelenideElement selenideElement = $("#wiki-content").shouldHave(text(String.join("\n",
+                "@ExtendWith({SoftAssertsExtension.class}))",
+                "class Tests {", "@Test", "void test() {",
+                "Configuration.assertionMode = SOFT;",
+                "open(\"page.html\");",
+                "$(\"#first\").should(visible).click();",
+                "$(\"#second\").should(visible).click();",
+                "}",
+                "}")));
 
 
     }
