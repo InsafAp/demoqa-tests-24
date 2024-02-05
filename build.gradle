@@ -14,8 +14,7 @@ dependencies {
             'org.junit.jupiter:junit-jupiter:5.10.1',
             'com.codeborne:selenide:7.0.4'
     )
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
 }
 
 test {

@@ -1,32 +1,32 @@
 package pages;
+
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 import pages.components.ResultComponent;
 
-import java.io.File;
 
 import static com.codeborne.selenide.Condition.hidden;
-import static com.codeborne.selenide.Condition.text;
+
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+
 public class RegistrationPage {
 
     private SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
-            userEmailInput =$("#userEmail"),
-            userGenderInput =$("#genterWrapper"),
-            userNumberInput =$("#userNumber"),
+            userEmailInput = $("#userEmail"),
+            userGenderInput = $("#genterWrapper"),
+            userNumberInput = $("#userNumber"),
             calendarInput = $("#dateOfBirthInput"),
-            subjectsInput =$("#subjectsInput"),
-            hobbiesInput=$("#hobbiesWrapper"),
-            pictureInput= $("#uploadPicture"),
-            userAddressInput=$("#currentAddress"),
-            stateInput=$("#state"),
-             stateCityInput=$("#stateCity-wrapper"),
-            cityInput=$("#city"),
+            subjectsInput = $("#subjectsInput"),
+            hobbiesInput = $("#hobbiesWrapper"),
+            pictureInput = $("#uploadPicture"),
+            userAddressInput = $("#currentAddress"),
+            stateInput = $("#state"),
+            stateCityInput = $("#stateCity-wrapper"),
+            cityInput = $("#city"),
             modalContent = $(".modal-content"),
-             submitInput=$("#submit");
-
+            submitInput = $("#submit");
 
 
     CalendarComponent calendarComponent = new CalendarComponent();
@@ -40,81 +40,85 @@ public class RegistrationPage {
 
         return this;
     }
+
     public RegistrationPage setFirstName(String value) {
         firstNameInput.setValue(value);
 
         return this;
 
     }
+
     public RegistrationPage setLastName(String value) {
         lastNameInput.setValue(value);
         return this;
 
     }
-    public RegistrationPage setUserEmail(String value){
+
+    public RegistrationPage setUserEmail(String value) {
         userEmailInput.setValue(value);
         return this;
 
     }
 
-    public RegistrationPage setGenderInput(String value){
+    public RegistrationPage setGenderInput(String value) {
         userGenderInput.$(byText(value)).click();
         return this;
 
     }
 
-    public RegistrationPage setNumberInput(String value){
+    public RegistrationPage setNumberInput(String value) {
         userNumberInput.setValue(value);
         return this;
 
     }
-    public RegistrationPage setDateOfBirthInput(String day, String month,String year){
+
+    public RegistrationPage setDateOfBirthInput(String day, String month, String year) {
         calendarInput.click();
         calendarComponent.setDate(day, month, year);
 
 
-
-        return  this;
+        return this;
     }
 
-    public RegistrationPage setSubjectsInput(String value){
+    public RegistrationPage setSubjectsInput(String value) {
         subjectsInput.setValue(value).pressEnter();
         return this;
 
     }
 
-    public RegistrationPage setHobbiesInput(String value){
+    public RegistrationPage setHobbiesInput(String value) {
         hobbiesInput.$(byText(value)).click();
         return this;
 
     }
 
-    public RegistrationPage setPicturesInput(String value){
+    public RegistrationPage setPicturesInput(String value) {
         pictureInput.uploadFromClasspath(value);
         return this;
 
     }
 
-    public RegistrationPage setAddressInput(String value){
+    public RegistrationPage setAddressInput(String value) {
         userAddressInput.setValue(value);
         return this;
 
     }
 
-    public RegistrationPage setStateInput(String value){
+    public RegistrationPage setStateInput(String value) {
         stateInput.click();
         stateCityInput.$(byText(value)).click();
         return this;
 
     }
 
-    public RegistrationPage setCityInput(String value){
+    public RegistrationPage setCityInput(String value) {
         cityInput.click();
         stateCityInput.$(byText(value)).click();
         return this;
 
     }
-    public RegistrationPage submit(){
+
+    public RegistrationPage submit() {
         submitInput.click();
         return this;
 
@@ -123,11 +127,11 @@ public class RegistrationPage {
 
 //проверка резалтов
 
-    public RegistrationPage checkResult(String field, String value){
+    public RegistrationPage checkResult(String field, String value) {
         resultComponent.checkResult(field, value);
 
 
-        return  this;
+        return this;
 
     }
 
@@ -136,8 +140,6 @@ public class RegistrationPage {
 
         return this;
     }
-
-
 
 
 }
