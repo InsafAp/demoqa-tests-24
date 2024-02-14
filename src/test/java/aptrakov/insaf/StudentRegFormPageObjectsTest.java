@@ -3,59 +3,61 @@ package aptrakov.insaf;
 
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
+import pages.testdata.TestData;
 
 
 public class StudentRegFormPageObjectsTest extends TestBase {
     RegistrationPage registrationPage = new RegistrationPage();
+    TestData testData = new TestData();
 
 
     @Test
     void studentRegFormTest() {
         registrationPage.openPage()
-                .setFirstName("Insaf")
-                .setLastName("Aptrakov")
-                .setUserEmail("insaf@aptrakov.com")
-                .setGenderInput("Male")
-                .setNumberInput("9111111111")
-                .setDateOfBirthInput("16", "December", "1999")
-                .setSubjectsInput("Arts")
-                .setHobbiesInput("Sports")
-                .setPicturesInput("test.jpeg")
-                .setAddressInput("test")
-                .setStateInput("NCR")
-                .setCityInput("Delhi")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setUserEmail(testData.userEmail)
+                .setGenderInput(testData.gender)
+                .setNumberInput(testData.phone)
+                .setDateOfBirthInput(testData.birthDay, testData.birthMonth, testData.birthYear)
+                .setSubjectsInput(testData.subject)
+                .setHobbiesInput(testData.hobby)
+                .setPicturesInput(testData.picture)
+                .setAddressInput(testData.address)
+                .setStateInput(testData.state)
+                .setCityInput(testData.city)
                 .submit();
 
 
-        registrationPage.checkResult("Student Name", "Insaf Aptrakov")
-                .checkResult("Student Email", "insaf@aptrakov.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "9111111111")
-                .checkResult("Date of Birth", "16 December,1999")
-                .checkResult("Subjects", "Arts")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Picture", "test.jpeg")
-                .checkResult("Address", "test")
-                .checkResult("State and City", "NCR Delhi");
+        registrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", testData.userEmail)
+                .checkResult("Gender", testData.gender)
+                .checkResult("Mobile", testData.phone)
+                .checkResult("Date of Birth", testData.birthDay + " " + testData.birthMonth + "," + testData.birthYear)
+                .checkResult("Subjects", testData.subject)
+                .checkResult("Hobbies", testData.hobby)
+                .checkResult("Picture", testData.picture)
+                .checkResult("Address", testData.address)
+                .checkResult("State and City", testData.state + " " + testData.city);
 
     }
 
     @Test
     void studentRegFormReqParamsTest() {
         registrationPage.openPage()
-                .setFirstName("Insaf")
-                .setLastName("Aptrakov")
-                .setGenderInput("Male")
-                .setNumberInput("9111111111")
-                .setDateOfBirthInput("16", "December", "1999")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setGenderInput(testData.gender)
+                .setNumberInput(testData.phone)
+                .setDateOfBirthInput(testData.birthDay, testData.birthMonth, testData.birthYear)
                 .submit();
 
 
-        registrationPage.checkResult("Student Name", "Insaf Aptrakov")
+        registrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
                 .checkResult("Student Email", "\t")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "9111111111")
-                .checkResult("Date of Birth", "16 December,1999")
+                .checkResult("Gender", testData.gender)
+                .checkResult("Mobile", testData.phone)
+                .checkResult("Date of Birth", testData.birthDay + " " + testData.birthMonth + "," + testData.birthYear)
                 .checkResult("Subjects", "\t")
                 .checkResult("Hobbies", "\t")
                 .checkResult("Picture", "\t")
@@ -69,7 +71,7 @@ public class StudentRegFormPageObjectsTest extends TestBase {
     @Test
     void studentRegFormFailTest() {
         registrationPage.openPage()
-                .setFirstName("Insaf")
+                .setFirstName(testData.firstName)
                 .submit();
 
 
