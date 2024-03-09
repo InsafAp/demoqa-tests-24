@@ -1,6 +1,8 @@
 package aptrakov.insaf.homework10;
 
+import aptrakov.insaf.homework10.model.User;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
@@ -18,6 +20,11 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+
 public class HomeWork10ZipRead {
     private final ClassLoader cl = HomeWork10ZipRead.class.getClassLoader();
     private final Gson gson = new Gson();
@@ -29,7 +36,7 @@ public class HomeWork10ZipRead {
              ZipInputStream zis = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().endsWith(".csv")) {
+                if (entry.getName().contains("testcsv.csv")) {
                     CSVReader csvReader = new CSVReader(new InputStreamReader(zis));
                     List<String[]> content = csvReader.readAll();
                     Assertions.assertArrayEquals(new String[]{"TestInsaf"}, content.get(0));
@@ -46,7 +53,7 @@ public class HomeWork10ZipRead {
              ZipInputStream zis = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().endsWith(".pdf")) {
+                if (entry.getName().contains("testpdf.pdf")) {
                     PDF pdf = new PDF(zis);
                     Assertions.assertTrue(pdf.text.contains("TestInsaf"));
                 }
@@ -62,7 +69,7 @@ public class HomeWork10ZipRead {
              ZipInputStream zis = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().endsWith(".xlsx")) {
+                if (entry.getName().contains("testxlsx.xlsx")) {
                     XLS xlsx = new XLS(zis);
                     Assertions.assertEquals("testxlsx.xlsx",
                             xlsx.excel.getSheet("TestInsaf").getRow(1).getCell(0).getStringCellValue());
@@ -77,18 +84,15 @@ public class HomeWork10ZipRead {
     void jsonParsingTest() throws Exception {
         try (InputStream is = cl.getResourceAsStream("jsonfile.json");
              Reader reader = new InputStreamReader(is)) {
-            JsonObject object = gson.fromJson(reader, JsonObject.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            User user = objectMapper.readValue(reader, User.class);
+            assertThat(user.getAge()).isEqualTo(27);
+            assertThat(user.getName()).isEqualTo("Insaf");
+            assertThat(user.getFullName().toArray()).isEqualTo(new String[]{"Insaf", "Aptrakov"});
 
-            Assertions.assertEquals("Insaf", object.get("name").getAsString());
-            Assertions.assertEquals(27, object.get("age").getAsInt());
-            Assertions.assertArrayEquals(
-                    new String[]{"Insaf", "Aptrakov"},
-                    object.get("fullName").getAsJsonArray()
-                            .asList()
-                            .stream()
-                            .map(JsonElement::getAsString)
-                            .toArray()
-            );
+
+
+
         }
     }
 }
