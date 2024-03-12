@@ -55,7 +55,7 @@ public class HomeWork10ZipRead {
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().contains("testpdf.pdf")) {
                     PDF pdf = new PDF(zis);
-                    Assertions.assertTrue(pdf.text.contains("TestInsaf"));
+                    Assertions.assertTrue(pdf.text.contains("Схема взаимодействия"));
                 }
 
             }
@@ -69,15 +69,15 @@ public class HomeWork10ZipRead {
              ZipInputStream zis = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().contains("testxlsx.xlsx")) {
-                    XLS xlsx = new XLS(zis);
-                    Assertions.assertEquals("testxlsx.xlsx",
-                            xlsx.excel.getSheet("TestInsaf").getRow(1).getCell(0).getStringCellValue());
+                if (entry.getName().contains("testxlsx.xls")) {
+                    XLS xls = new XLS(zis);
+                    assertThat(xls.excel.getSheet("Лист1").getRow(0).getCell(0).getStringCellValue()).isEqualTo("TestInsaf");
                 }
 
             }
         }
     }
+
 
     @Test
     @DisplayName("Парсинг JSON файла ")
